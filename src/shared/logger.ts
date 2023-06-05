@@ -13,7 +13,7 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
     return `${date.toDateString()} ${hours}:${minutes}:${seconds} [${label}] ${level}: ${message}`;
 });
 
-const successLogger = createLogger({
+const infoLogger = createLogger({
     level: "info",
     format: combine(
         label({ label: "University Management Auth Service" }),
@@ -63,4 +63,4 @@ const errorLogger = createLogger({
     ],
 });
 
-export { successLogger, errorLogger };
+export { infoLogger, errorLogger };
