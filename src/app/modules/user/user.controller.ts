@@ -6,6 +6,7 @@ import { IUser } from "./user.interface";
 import { UserService } from "./user.service";
 
 const createUser = catchAsync(
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const { user } = req.body;
         const result = await UserService.createUser(user);
@@ -15,7 +16,6 @@ const createUser = catchAsync(
             message: "User created successfully!",
             data: result,
         });
-        next();
     }
 );
 
