@@ -4,6 +4,7 @@ import { paginationFields } from "../../../constants/pagination";
 import catchAsync from "../../../shared/catchAsync";
 import pick from "../../../shared/pick";
 import sendResponse from "../../../shared/sendResponse";
+import { academicSemesterFilterableFields } from "./academic-semester.constant";
 import { IAcademicSemester } from "./academic-semester.interface";
 import { AcademicSemesterService } from "./academic-semester.service";
 
@@ -26,9 +27,11 @@ const createSemester = catchAsync(
 const getAllSemesters = catchAsync(
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     async (req: Request, res: Response, next: NextFunction) => {
+        const filters = pick(req.query, academicSemesterFilterableFields);
         const paginationOptions = pick(req.query, paginationFields);
 
         const result = await AcademicSemesterService.getAllSemesters(
+            filters,
             paginationOptions
         );
 
