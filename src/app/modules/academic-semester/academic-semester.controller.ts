@@ -44,7 +44,22 @@ const getAllSemesters = catchAsync(
     }
 );
 
+const getSingleSemester = catchAsync(
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+    async (req: Request, res: Response, next: NextFunction) => {
+        const id = req.params.id;
+        const result = await AcademicSemesterService.getSingleSemester(id);
+
+        sendResponse<IAcademicSemester>(res, status.OK, {
+            success: true,
+            message: "Academic semester retrieved successfully!",
+            data: result,
+        });
+    }
+);
+
 export const AcademicSemesterController = {
     createSemester,
     getAllSemesters,
+    getSingleSemester,
 };
