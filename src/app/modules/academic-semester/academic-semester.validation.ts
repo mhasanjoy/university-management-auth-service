@@ -64,7 +64,7 @@ const updateAcademicSemesterZodSchema = z
             (!data.body.title && !data.body.code),
         {
             message:
-                "Either title and body both should be provided or neither!",
+                "Either title and code both should be provided or neither!",
         }
     );
 

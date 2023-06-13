@@ -1,4 +1,6 @@
 import { Response } from "express";
+import status from "http-status";
+import ApiError from "../errors/ApiError";
 
 type IApiResponse<T> = {
     success: boolean;
@@ -22,6 +24,11 @@ const sendResponse = <T>(
         meta: data.meta || null,
         data: data.data || null,
     };
+
+    if (responseData.data === null) {
+        throw new ApiError(status.NOT_FOUND, "ID Not Found!");
+    }
+
     res.status(statusCode).json({
         ...responseData,
     });
