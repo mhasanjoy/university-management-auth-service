@@ -11,12 +11,16 @@ const createAcademicDepartmentZodSchema = z.object({
     }),
 });
 
-const updateAcademicDepartmentZodSchema = z.object({
-    body: z.object({
-        title: z.string().optional(),
-        academicFaculty: z.string().optional(),
-    }),
-});
+const updateAcademicDepartmentZodSchema = z
+    .object({
+        body: z.object({
+            title: z.string().optional(),
+            academicFaculty: z.string().optional(),
+        }),
+    })
+    .refine(data => data.body.title || data.body.academicFaculty, {
+        message: "Either title or academicFaculty should be provided!",
+    });
 
 export const AcademicDepartmentValidation = {
     createAcademicDepartmentZodSchema,

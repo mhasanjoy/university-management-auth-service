@@ -15,12 +15,16 @@ const schema = new Schema<IAcademicDepartment, AcademicDepartmentModel>(
             unique: true,
         },
         academicFaculty: {
-            type: String,
+            type: Schema.Types.ObjectId,
+            ref: "AcademicFaculty",
             required: true,
         },
     },
     {
         timestamps: true,
+        toJSON: {
+            virtuals: true,
+        },
     }
 );
 
@@ -44,25 +48,37 @@ schema.pre("save", async function (next) {
 
 schema.pre("findOneAndUpdate", async function (next) {
     const update = this.getUpdate();
-    let filter: { title: string };
+    const docToUpdate = await this.model.findOne(this.getQuery());
 
+    let titleFilter: { title: string };
     if (update && "title" in update) {
-        filter = { title: update.title };
+        titleFilter = {
+            title: update.title,
+        };
     } else {
-        filter = { title: "" };
+        titleFilter = { title: docToUpdate.academicFaculty };
     }
 
-    const isExist = await AcademicDepartment.findOne(filter);
-
+    const isExist = await AcademicDepartment.findOne(titleFilter);
     if (isExist) {
         throw new ApiError(
             status.CONFLICT,
-            "Academic department with the same title already exists."
+            "Academic department with the same title already exists!"
         );
     }
 
-    const docToUpdate = await this.model.findOne(this.getQuery());
-    const faculty = await AcademicFaculty.findById(docToUpdate.academicFaculty);
+    let facultyFilter: { academicFaculty: string };
+    if (update && "academicFaculty" in update) {
+        facultyFilter = {
+            academicFaculty: update.academicFaculty,
+        };
+    } else {
+        facultyFilter = { academicFaculty: docToUpdate.academicFaculty };
+    }
+
+    const faculty = await AcademicFaculty.findById(
+        facultyFilter.academicFaculty
+    );
     if (!faculty) {
         throw new ApiError(status.BAD_REQUEST, "Invalid academic faculty!");
     }
