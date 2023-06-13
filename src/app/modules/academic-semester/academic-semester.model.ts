@@ -57,6 +57,32 @@ schema.pre("save", async function (next) {
     next();
 });
 
+schema.pre("findOneAndUpdate", async function (next) {
+    const update = this.getUpdate();
+    const docToUpdate = await this.model.findOne(this.getQuery());
+    let filter: { title: string; year: string };
+
+    if (update && "year" in update && "title" in update) {
+        filter = { title: update.title, year: update.year };
+    } else if (update && "title" in update) {
+        filter = { title: update.title, year: docToUpdate.year };
+    } else if (update && "year" in update) {
+        filter = { title: docToUpdate.title, year: update.year };
+    } else {
+        filter = { title: "", year: "" };
+    }
+
+    const isExist = await AcademicSemester.findOne(filter);
+
+    if (isExist) {
+        throw new ApiError(
+            status.CONFLICT,
+            "Academic semester with the same title and year already exists!"
+        );
+    }
+    next();
+});
+
 const AcademicSemester = model<IAcademicSemester, AcademicSemesterModel>(
     "AcademicSemester",
     schema
