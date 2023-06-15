@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose";
 import { bloodGroup, gender } from "../user/user.constant";
-import { IStudent, StudentModel } from "./student.interface";
+import { FacultyModel, IFaculty } from "./faculty.interface";
 
-const schema = new Schema<IStudent, StudentModel>(
+const schema = new Schema<IFaculty, FacultyModel>(
     {
         id: {
             type: String,
@@ -55,53 +55,9 @@ const schema = new Schema<IStudent, StudentModel>(
             type: String,
             required: true,
         },
-        guardian: {
-            fatherName: {
-                type: String,
-                required: true,
-            },
-            fatherOccupation: {
-                type: String,
-                required: true,
-            },
-            fatherContactNo: {
-                type: String,
-                required: true,
-            },
-            motherName: {
-                type: String,
-                required: true,
-            },
-            motherOccupation: {
-                type: String,
-                required: true,
-            },
-            motherContactNo: {
-                type: String,
-                required: true,
-            },
-            address: {
-                type: String,
-                required: true,
-            },
-        },
-        localGuardian: {
-            name: {
-                type: String,
-                required: true,
-            },
-            occupation: {
-                type: String,
-                required: true,
-            },
-            contactNo: {
-                type: String,
-                required: true,
-            },
-            address: {
-                type: String,
-                required: true,
-            },
+        designation: {
+            type: String,
+            required: true,
         },
         profileImage: {
             type: String,
@@ -117,11 +73,6 @@ const schema = new Schema<IStudent, StudentModel>(
             required: true,
             ref: "AcademicDepartment",
         },
-        academicSemester: {
-            type: Schema.Types.ObjectId,
-            required: true,
-            ref: "AcademicSemester",
-        },
     },
     {
         timestamps: true,
@@ -131,6 +82,6 @@ const schema = new Schema<IStudent, StudentModel>(
     }
 );
 
-const Student = model<IStudent, StudentModel>("Student", schema);
+const Faculty = model<IFaculty, FacultyModel>("Faculty", schema);
 
-export default Student;
+export default Faculty;

@@ -1,17 +1,17 @@
-export const studentSearchableFields: string[] = [
+export const facultySearchableFields: string[] = [
     "id",
     "email",
-    "contactNo",
+    "designation",
     "name.firstName",
     "name.middleName",
     "name.lastName",
 ];
 
-export const studentFilterableFields: string[] = [
+export const facultyFilterableFields: string[] = [
     "searchTerm",
     "id",
     "bloodGroup",
     "email",
     "contactNo",
-    "emergencyContactNo",
+    "designation",
 ];
