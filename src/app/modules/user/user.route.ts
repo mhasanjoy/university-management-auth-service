@@ -10,8 +10,11 @@ router.post(
     RequestValidation(UserValidation.createStudentZodSchema),
     UserController.createStudent
 );
-
-// create faculty
+router.post(
+    "/create-faculty",
+    RequestValidation(UserValidation.createFacultyZodSchema),
+    UserController.createFaculty
+);
 
 // create admin
 
