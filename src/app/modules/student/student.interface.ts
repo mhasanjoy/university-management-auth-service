@@ -3,7 +3,7 @@ import { IAcademicDepartment } from "../academic-department/academic-department.
 import { IAcademicFaculty } from "../academic-faculty/academic-faculty.interface";
 import { IAcademicSemester } from "../academic-semester/academic-semester.interface";
 
-type IUserName = {
+export type IUserName = {
     firstName: string;
     middleName?: string;
     lastName: string;
@@ -58,3 +58,12 @@ export type IStudent = {
 };
 
 export type StudentModel = Model<IStudent, Record<string, unknown>>;
+
+export type IStudentFilters = {
+    searchTerm?: string;
+    id?: string;
+    bloodGroup?: IBloodGroup;
+    email?: string;
+    contactNo?: string;
+    emergencyContactNo?: string;
+};
