@@ -33,7 +33,22 @@ const createFaculty: RequestHandler = catchAsync(
     }
 );
 
+const createAdmin: RequestHandler = catchAsync(
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+    async (req, res, next): Promise<void> => {
+        const { admin, ...user } = req.body;
+        const result = await UserService.createAdmin(admin, user);
+
+        sendResponse<IUser>(res, status.OK, {
+            success: true,
+            message: "Admin created successfully!",
+            data: result,
+        });
+    }
+);
+
 export const UserController = {
     createStudent,
     createFaculty,
+    createAdmin,
 };
