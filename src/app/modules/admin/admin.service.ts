@@ -102,36 +102,36 @@ const updateAdmin = async (
 };
 
 const deleteAdmin = async (id: string): Promise<IAdmin | null> => {
-    let deletedAdminData: IAdmin | null = null;
     const session = await mongoose.startSession();
 
     try {
         session.startTransaction();
 
-        const deletedAdmin = await Admin.findOneAndDelete([{ id }], {
-            session,
-        }).populate("managementDepartment");
+        const admin = await Admin.findOneAndDelete(
+            { id },
+            {
+                session,
+            }
+        ).populate("managementDepartment");
 
-        if (!deletedAdmin) {
+        if (!admin) {
             throw new ApiError(status.BAD_REQUEST, "Failed to delete admin!");
         }
 
-        const deletedUser = await User.findOneAndDelete([{ id }], { session });
-        if (!deletedUser) {
+        const user = await User.findOneAndDelete({ id }, { session });
+        if (!user) {
             throw new ApiError(status.BAD_REQUEST, "Failed to delete user!");
         }
 
-        deletedAdminData = deletedAdmin;
-
         await session.commitTransaction();
         await session.endSession();
+
+        return admin;
     } catch (error) {
         await session.abortTransaction();
         await session.endSession();
         throw error;
     }
-
-    return deletedAdminData;
 };
 
 export const AdminService = {
