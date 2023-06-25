@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Model, Types } from "mongoose";
 import { IAdmin } from "../admin/admin.interface";
 import { IFaculty } from "../faculty/faculty.interface";
@@ -13,15 +14,21 @@ export type IUser = {
     admin?: Types.ObjectId | IAdmin;
 };
 
-// type IUserMethods = {
-//     isUserExist(id: string): Promise<boolean>;
-//     isPasswordMatched(
-//         givenPassword: string,
-//         savedPassword: string
-//     ): Promise<boolean>;
-// };
+export type IUserMethods = {
+    isUserExist(
+        id: string
+    ): Promise<Pick<
+        IUser,
+        "id" | "role" | "password" | "needsPasswordChange"
+    > | null>;
+};
 
-export type UserModel = Model<IUser, Record<string, unknown>>;
+export type UserModel = {
+    isPasswordMatched(
+        givenPassword: string,
+        savedPassword: string
+    ): Promise<boolean>;
+} & Model<IUser, Record<string, never>, IUserMethods>;
 
 export type IUserName = {
     firstName: string;
