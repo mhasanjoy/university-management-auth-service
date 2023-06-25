@@ -1,14 +1,17 @@
 import { RequestHandler } from "express";
 // import status from "http-status";
-// import sendResponse from "../../../shared/sendResponse";
 import catchAsync from "../../../shared/catchAsync";
+// import sendResponse from "../../../shared/sendResponse";
+// import { AuthService } from "./auth.service";
 
 const loginUser: RequestHandler = catchAsync(
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     async (req, res, next): Promise<void> => {
-        // sendResponse<IAcademicSemester>(res, status.OK, {
+        // const { ...loginData } = req.body;
+        // const result = await AuthService.loginUser(loginData);
+        // sendResponse<>(res, status.OK, {
         //     success: true,
-        //     message: "Academic semester created successfully!",
+        //     message: "User logged in successfully!",
         //     data: result,
         // });
     }
