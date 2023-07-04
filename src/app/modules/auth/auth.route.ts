@@ -10,11 +10,15 @@ router.post(
     RequestValidation(AuthValidation.loginZodSchema),
     AuthController.userLogin
 );
-
 router.post(
     "/refresh-token",
     RequestValidation(AuthValidation.refreshTokenZodSchema),
     AuthController.refreshToken
+);
+router.post(
+    "/change-password",
+    RequestValidation(AuthValidation.changePasswordZodSchema),
+    AuthController.changePassword
 );
 
 export const AuthRoutes = router;

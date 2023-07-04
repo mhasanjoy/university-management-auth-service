@@ -21,7 +21,7 @@ const auth =
             // verify token
             const verifiedUser = jwtHelpers.verifyToken(
                 token,
-                config.jwt.refresh_secret as Secret
+                config.jwt.secret as Secret
             );
 
             req.user = verifiedUser;
