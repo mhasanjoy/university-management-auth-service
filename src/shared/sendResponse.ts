@@ -22,7 +22,7 @@ const sendResponse = <T>(
         success: data.success,
         message: data.message || null,
         meta: data.meta || null,
-        data: data.data || null,
+        data: data.data,
     };
 
     if (responseData.data === null) {
