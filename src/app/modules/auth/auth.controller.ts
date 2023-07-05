@@ -45,14 +45,15 @@ const refreshToken: RequestHandler = catchAsync(
 const changePassword: RequestHandler = catchAsync(
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     async (req, res, next): Promise<void> => {
-        // const { ...passwordData } = req.body;
-        // const user = req.user;
-        // const result = await AuthService.changePassword(user, passwordData);
-        // sendResponse<IUserLoginResponse>(res, status.OK, {
-        //     success: true,
-        //     message: "Password changed successfully!",
-        //     data: result,
-        // });
+        const { ...passwordData } = req.body;
+        const user = req.user;
+
+        await AuthService.changePassword(user, passwordData);
+
+        sendResponse(res, status.OK, {
+            success: true,
+            message: "Password changed successfully!",
+        });
     }
 );
 

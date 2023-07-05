@@ -90,7 +90,10 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
     };
 };
 
-const changePassword = async (user: JwtPayload, payload: IChangePassword) => {
+const changePassword = async (
+    user: JwtPayload,
+    payload: IChangePassword
+): Promise<void> => {
     const { oldPassword, newPassword } = payload;
 
     const newUser = new User();
@@ -107,14 +110,15 @@ const changePassword = async (user: JwtPayload, payload: IChangePassword) => {
         throw new ApiError(status.UNAUTHORIZED, "Old password is incorrect!");
     }
 
-    const newHashedPassword = bcrypt.hash(
+    const newHashedPassword = await bcrypt.hash(
         newPassword,
-        config.bcrypt_salt_rounds as string
+        Number(config.bcrypt_salt_rounds)
     );
 
     const updatedData = {
         password: newHashedPassword,
         needsPasswordChange: false,
+        passwordChangedAt: new Date(),
     };
 
     await User.findOneAndUpdate({ id: user.id }, updatedData);
